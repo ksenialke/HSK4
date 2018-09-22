@@ -9,7 +9,6 @@ const http = require('http');
 app.set('view engine', 'ejs');
 app.use('/css', express.static('css'));
 
-let words = 36;
 
 // Returns unknown words
 function getUnknown(words){
@@ -18,16 +17,24 @@ function getUnknown(words){
 
 //Returns the percentage
 function percentage(words){
-    return ((words/1200) * 100);
+    return ((words/1200) * 100).toFixed(2);
 }
 
-
 app.get('/', (req, res) => {
+    // przeczytać plik i wzionc z niego words
     res.render('index', {
         percentage: percentage(words) + "%",
         known_words: words,
         words_left: getUnknown(words)
     });
+});
+
+app.post('/', (req, res) => {
+    // przeczytac plik, wzionc words
+    // zwiekszysc words o jeden
+    // NADPISAĆ to co było w pliku
+    words++;
+    res.redirect('/');
 });
 
 // Creating the server where browsers can connect
