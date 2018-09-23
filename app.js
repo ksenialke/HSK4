@@ -5,10 +5,12 @@ const app = express();
 const path = require('path');
 // To use HTTP and client
 const http = require('http');
+const fs = require('fs');
 
 app.set('view engine', 'ejs');
 app.use('/css', express.static('css'));
 
+const words =43;
 
 // Returns unknown words
 function getUnknown(words){
@@ -20,22 +22,29 @@ function percentage(words){
     return ((words/1200) * 100).toFixed(2);
 }
 
+function getWords(){
+    return Number(fs.readFileSync('wordz.txt', 'utf-8'));
+};
+
+
 app.get('/', (req, res) => {
-    // przeczytać plik i wzionc z niego words
+    var known = getWords();
     res.render('index', {
-        percentage: percentage(words) + "%",
-        known_words: words,
-        words_left: getUnknown(words)
+        percentage: percentage(known) + "%",
+        known_words: known,
+        words_left: getUnknown(known)
     });
 });
 
 app.post('/', (req, res) => {
-    // przeczytac plik, wzionc words
-    // zwiekszysc words o jeden
-    // NADPISAĆ to co było w pliku
-    words++;
+    var known = getWords();
+    known++;
+    fs.writeFileSync('wordz.txt', known);
     res.redirect('/');
 });
+
+
+
 
 // Creating the server where browsers can connect
 app.listen(8000, () => {
