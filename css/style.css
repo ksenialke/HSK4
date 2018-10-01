@@ -67,4 +67,20 @@ header {
     color: #fff;
     font-weight: 700;
 }
+form{
+    text-align: center;
+    padding: 20px;
+    position: absolute;
+    top: 80%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    background: #e4d4e1;
+    color: black;
+    border-style: dotted;
+    border-radius: 50%;
+    text-shadow:none;
+}
+form:hover{
+    background-color: #622569;
+}
 
